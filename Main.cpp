@@ -5,7 +5,8 @@
 #import <DHT_U.h>
 
 //Prefered Temp
-#define Ideal_temp_farenheit
+#define Ideal_temp_celsius
+#define Ideal_delay_ms 30000
 
 //Defenitions
 #define DHTPIN 9
@@ -46,11 +47,12 @@ void setup() {
 
 
 void loop() {
-
-}
-
-
-void getTemperature() {
     sensors_event_t event;
     dht.temperature().getEvent(&event);
+    if ((event.temperature) > Ideal_temp_celsius) {
+    digitalWrite(Mosfet, LOW);
+    }else if ((event.temperature) <= Ideal_temp_celsius) {
+    digitalWrite(Mosfet, HIGH);
+    }
+    Delay(Ideal_Delay_ms);
 }
